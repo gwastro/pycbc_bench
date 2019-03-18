@@ -1,0 +1,21 @@
+Bootstrap: docker
+From: conda/miniconda3-centos7:latest
+
+%setup
+
+%files
+    run_pe.sh
+    run_inspiral.sh
+    bank.hdf
+
+%apprun pe
+    echo "DOING PE"
+
+%apprun inspiral
+    echo "DOING INSPIRAL STUFF"
+
+
+%post
+echo "POST"
+conda config --add channels conda-forge
+conda install pycbc

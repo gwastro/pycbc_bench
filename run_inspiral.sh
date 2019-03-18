@@ -1,6 +1,6 @@
 #!/bin/bash
 export NCORES=`getconf _NPROCESSORS_ONLN`
-
+echo "Using cores: ${NCORES}"
 for ((c=1; c<=$NCORES; c++ ))
 do
     /usr/bin/time -f '%e' \
@@ -40,7 +40,7 @@ do
     --gps-end-time 1126259846 \
     --output test.hdf \
     --approximant "SPAtmplt:mtotal<4" "IMRPhenomD:else" \
-    --bank-file bank.hdf 2> $c.log &
+    --bank-file /bank.hdf 2> $c.log &
 done
 wait $!
 sleep 10

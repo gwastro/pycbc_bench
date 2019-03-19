@@ -13,12 +13,13 @@ SEARCH_AFTER=2
 SAMPLE_RATE=2048
 F_MIN=20
 
-PSD_INVLENG=4
+PSD_INVLEN=4
 IFOS="H1 L1"
 STRAIN="H1:aLIGOZeroDetHighPower L1:aLIGOZeroDetHighPower"
 
 # scale the number of walkers to use by the number of cores available
-NWALKERS=$((10*NCORES))
+NWALKERS=$((20*NCORES))
+echo "Using ${NWALKERS} walkers"
 
 # start and end time of data to read in
 # get coalescence time as an integer
@@ -30,8 +31,8 @@ GPS_END_TIME=$((TRIGGER_TIME_INT + SEARCH_AFTER + PSD_INVLEN))
 
 export OMP_NUM_THREADS=1
 
-/usr/bin/time -f '%e'
-pycbc_inference --verbose \
+/usr/bin/time -f '%e' \
+pycbc_inference \
     --seed 12 \
     --instruments ${IFOS} \
     --gps-start-time ${GPS_START_TIME} \
@@ -51,7 +52,7 @@ pycbc_inference --verbose \
     --nprocesses ${NCORES} \
     --config-overrides sampler:nwalkers:${NWALKERS} \
     --force \
-2> bbh_pe.log &
+2> bbh_pe.log
 
 RUNTIME=`cat bbh_pe.log`
-bc <<< "$RUNTIME / $NWALKERS"
+echo "$RUNTIME / $NWALKERS" | bc -l

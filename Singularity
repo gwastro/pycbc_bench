@@ -4,16 +4,19 @@ From: conda/miniconda3-centos7:latest
 %setup
 
 %files
-    run_pe.sh
     run_inspiral.sh
     bank.hdf
+    run_bbh_pe.sh
+    bbh_injection.hdf
+    bbh_pe.ini
 
 %apprun inspiral
     echo "Running inspiral benchmark"
     sh /run_inspiral.sh
 
 %apprun pe
-    echo "DOING PE"
+    echo "Running BBH pe"
+    sh /run_bbh_pe.sh
 
 %post
 yum install -y time bc

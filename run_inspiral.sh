@@ -44,5 +44,4 @@ do
 done
 wait $!
 sleep 10
-export PROFTIME=`cat 1.log`
-bc <<< "$PROFTIME / $NCORES"
+gawk '/^[0-9]/ {sum += 1/$1} END {print sum}' [0-9]*.log

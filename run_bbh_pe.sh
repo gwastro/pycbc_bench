@@ -54,5 +54,4 @@ pycbc_inference \
     --force \
 2> bbh_pe.log
 
-RUNTIME=`cat bbh_pe.log`
-echo "$RUNTIME / $NWALKERS" | bc -l
+gawk "/^[0-9]/ {print $NWALKERS/\$1 }" ./bbh_pe.log

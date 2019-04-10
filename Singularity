@@ -7,12 +7,16 @@ From: conda/miniconda3-centos7:latest
     files/ /opt/benchmark
 
 %apprun inspiral
+    mkdir -p /tmp/benchmark
+    cp /opt/benchmark/* /tmp/benchmark
     echo "Running inspiral benchmark"
-    sh /opt/benchmark/run_inspiral.sh
+    sh /tmp/benchmark/run_inspiral.sh
 
 %apprun pe
+    mkdir -p /tmp/benchmark
+    cp /opt/benchmark/* /tmp/benchmark
     echo "Running BBH pe"
-    sh /opt/benchmark/run_bbh_pe.sh
+    sh /tmp/benchmark/run_bbh_pe.sh
 
 %post
 yum install -y time bc

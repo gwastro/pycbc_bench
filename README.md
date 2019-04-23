@@ -5,4 +5,4 @@ Some benchmark singularity images for pycbc / pycbc inference
 sudo singularity build pycbcb.img Singularity
 
 # run pycbc inspiral
-singularity run --app inspiral pycbcb.img
+singularity run --cleanenv --app inspiral pycbcb.img

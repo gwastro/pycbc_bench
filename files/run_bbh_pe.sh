@@ -32,7 +32,7 @@ GPS_END_TIME=$((TRIGGER_TIME_INT + SEARCH_AFTER + PSD_INVLEN))
 export OMP_NUM_THREADS=1
 
 /usr/bin/time -f '%e' \
-pycbc_inference \
+/tmp/benchmark/wrapper_bbh_pe.py \
     --seed 12 \
     --instruments ${IFOS} \
     --gps-start-time ${GPS_START_TIME} \

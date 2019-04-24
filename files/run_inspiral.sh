@@ -4,7 +4,7 @@ echo "Using cores: ${NCORES}"
 for ((c=1; c<=$NCORES; c++ ))
 do
     /usr/bin/time -f '%e' \
-    pycbc_inspiral \
+    /tmp/benchmark/wrapper_inspiral.py \
     --fake-strain-seed 0 \
     --fake-strain aLIGOZeroDetLowPower \
     --sample-rate 2048 \

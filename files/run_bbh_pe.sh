@@ -54,4 +54,4 @@ export OMP_NUM_THREADS=1
     --force \
 2> bbh_pe.log
 
-gawk "/^[0-9]/ {print $NWALKERS/\$1 }" ./bbh_pe.log
+gawk "/^[0-9]/ {print \"PE Result:\" $NWALKERS/\$1/0.52 }" ./bbh_pe.log

@@ -40,7 +40,6 @@ timeout 60 pycbc_inspiral \
 
 export NCORES=`getconf _NPROCESSORS_ONLN`
 
-echo "Using cores: ${NCORES}"
 for ((c=1; c<=$NCORES; c++ ))
 do
     /usr/bin/time -f '%e' \
@@ -80,7 +79,7 @@ do
     --gps-end-time 1126259846 \
     --output test.hdf \
     --approximant "SPAtmplt:mtotal<4" "IMRPhenomD:else" \
-    --bank-file /dev/shm/benchmark/bank.hdf 2> $c.log &
+    --bank-file /dev/shm/benchmark/bank.hdf 2> $c.log > /dev/null&
 done
 wait $!
 sleep 60

@@ -1,6 +1,6 @@
 #!/bin/sh
 export NCORES=`getconf _NPROCESSORS_ONLN`
-echo "Using cores: ${NCORES}"
+echo "Using cores: ${NCORES}" > bbh_pe.log
 
 CONFIG_PATH=/dev/shm/benchmark/bbh_pe.ini
 OUTPUT_PATH=/dev/shm/benchmark/bbh_pe.hdf
@@ -19,7 +19,7 @@ STRAIN="H1:aLIGOZeroDetHighPower L1:aLIGOZeroDetHighPower"
 
 # scale the number of walkers to use by the number of cores available
 NWALKERS=$((20*NCORES))
-echo "Using ${NWALKERS} walkers"
+echo "Using ${NWALKERS} walkers" >> bbh_pe.log
 
 # start and end time of data to read in
 # get coalescence time as an integer
@@ -52,6 +52,6 @@ export OMP_NUM_THREADS=1
     --nprocesses ${NCORES} \
     --config-overrides sampler:nwalkers:${NWALKERS} \
     --force \
-2> bbh_pe.log
+2>> bbh_pe.log > /dev/null
 
 gawk "/^[0-9]/ {print \"PE result:\" $NWALKERS/\$1/0.52 }" ./bbh_pe.log

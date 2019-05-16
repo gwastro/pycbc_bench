@@ -84,4 +84,4 @@ do
 done
 wait $!
 sleep 60
-gawk '/^[0-9]/ {sum += 1/$1} END {print sum/0.16}' [0-9]*.log
+gawk '/^[0-9]/ {sum += 1/$1} END {print "inspiral result:" sum/0.16}' [0-9]*.log

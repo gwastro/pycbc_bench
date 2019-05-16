@@ -2,9 +2,9 @@
 export NCORES=`getconf _NPROCESSORS_ONLN`
 echo "Using cores: ${NCORES}"
 
-CONFIG_PATH=/tmp/benchmark/bbh_pe.ini
-OUTPUT_PATH=/tmp/benchmark/bbh_pe.hdf
-INJECTION_FILE=/tmp/benchmark/bbh_injection.hdf
+CONFIG_PATH=/dev/shm/benchmark/bbh_pe.ini
+OUTPUT_PATH=/dev/shm/benchmark/bbh_pe.hdf
+INJECTION_FILE=/dev/shm/benchmark/bbh_injection.hdf
 
 TRIGGER_TIME=1126259462.42
 
@@ -32,7 +32,7 @@ GPS_END_TIME=$((TRIGGER_TIME_INT + SEARCH_AFTER + PSD_INVLEN))
 export OMP_NUM_THREADS=1
 
 /usr/bin/time -f '%e' \
-/tmp/benchmark/wrapper_bbh_pe.py \
+/dev/shm/benchmark/wrapper_bbh_pe.py \
     --seed 12 \
     --instruments ${IFOS} \
     --gps-start-time ${GPS_START_TIME} \

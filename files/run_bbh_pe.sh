@@ -1,10 +1,10 @@
 #!/bin/sh
 export NCORES=`getconf _NPROCESSORS_ONLN`
-echo "Using cores: ${NCORES}"
+echo "Using cores: ${NCORES}" > bbh_pe.log
 
-CONFIG_PATH=/tmp/benchmark/bbh_pe.ini
-OUTPUT_PATH=/tmp/benchmark/bbh_pe.hdf
-INJECTION_FILE=/tmp/benchmark/bbh_injection.hdf
+CONFIG_PATH=/dev/shm/benchmark/bbh_pe.ini
+OUTPUT_PATH=/dev/shm/benchmark/bbh_pe.hdf
+INJECTION_FILE=/dev/shm/benchmark/bbh_injection.hdf
 
 TRIGGER_TIME=1126259462.42
 
@@ -19,7 +19,7 @@ STRAIN="H1:aLIGOZeroDetHighPower L1:aLIGOZeroDetHighPower"
 
 # scale the number of walkers to use by the number of cores available
 NWALKERS=$((20*NCORES))
-echo "Using ${NWALKERS} walkers"
+echo "Using ${NWALKERS} walkers" >> bbh_pe.log
 
 # start and end time of data to read in
 # get coalescence time as an integer
@@ -32,7 +32,7 @@ GPS_END_TIME=$((TRIGGER_TIME_INT + SEARCH_AFTER + PSD_INVLEN))
 export OMP_NUM_THREADS=1
 
 /usr/bin/time -f '%e' \
-pycbc_inference \
+/dev/shm/benchmark/wrapper_bbh_pe.py \
     --seed 12 \
     --instruments ${IFOS} \
     --gps-start-time ${GPS_START_TIME} \
@@ -52,6 +52,6 @@ pycbc_inference \
     --nprocesses ${NCORES} \
     --config-overrides sampler:nwalkers:${NWALKERS} \
     --force \
-2> bbh_pe.log
+2>> bbh_pe.log > /dev/null
 
-gawk "/^[0-9]/ {print $NWALKERS/\$1 }" ./bbh_pe.log
+gawk "/^[0-9]/ {print \"PE result:\" $NWALKERS/\$1/0.52 }" ./bbh_pe.log
